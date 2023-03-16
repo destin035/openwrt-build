@@ -63,7 +63,7 @@ jobs:
       run: make -C lede download -j8
   
     - name: build firmware
-      run: make -C lede -j2
+      run: make -C lede
 
     - name: archive files
       uses: actions/upload-artifact@v3
