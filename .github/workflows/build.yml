@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    
+
     steps:
     - name: apt install packages
       run: |
@@ -27,7 +27,7 @@ jobs:
         repository: coolsnowwolf/lede
         path: lede
 
-    - name: local cache
+    - name: lede downloads cache
       uses: j3hempsey-actions/local-cache@v1.0.0
       with:
         path: |
@@ -39,6 +39,12 @@ jobs:
           lede/feeds/kenzo
           lede/feeds/small
         key: lede-downloads
+
+    - name: lede ccache
+      uses: j3hempsey-actions/local-cache@v1.0.0
+      with:
+        path: lede/.ccache
+        key: lede-ccache
 
     - name: install feeds
       run: |
@@ -53,7 +59,7 @@ jobs:
         ./lede/scripts/feeds update -a
         ./lede/scripts/feeds install -a
         ./lede/scripts/feeds install -a
-  
+
     - name: build config
       run: |
         cat <<EOF | tee lede/.config
@@ -62,6 +68,8 @@ jobs:
         CONFIG_TARGET_x86_64_DEVICE_generic=y
         CONFIG_TARGET_KERNEL_PARTSIZE=256
         CONFIG_TARGET_ROOTFS_PARTSIZE=2048
+        CONFIG_DEVEL=y
+        CONFIG_CCACHE=y
         CONFIG_PACKAGE_luci-app-passwall2=y
         CONFIG_PACKAGE_luci-app-dockerman=y
         CONFIG_PACKAGE_luci-app-openclash=y
@@ -74,10 +82,10 @@ jobs:
         CONFIG_PACKAGE_kexec=y
         EOF
         make -C lede defconfig
-  
+
     - name: download packages
       run: make -C lede download -j16
-  
+
     - name: build firmware
       run: make -C lede -j8
 
