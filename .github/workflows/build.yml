@@ -6,6 +6,9 @@ on:
   schedule:
   - cron: '30 15 * * *'
 
+env:
+  CACHE_DIR: /_work/openwrt-build-runner/cache
+
 jobs:
   build:
     runs-on: self-hosted
