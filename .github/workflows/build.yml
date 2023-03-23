@@ -28,7 +28,7 @@ jobs:
         path: lede
 
     - name: local cache
-      uses: j3hempsey-actions/local-cache@v3
+      uses: j3hempsey-actions/local-cache@v1.0.0
       with:
         path: |
           lede/dl
@@ -38,6 +38,7 @@ jobs:
           lede/feeds/telephony
           lede/feeds/kenzo
           lede/feeds/small
+        key: lede-downloads
 
     - name: install feeds
       run: |
