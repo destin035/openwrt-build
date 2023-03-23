@@ -60,10 +60,10 @@ jobs:
         make -C lede defconfig
   
     - name: download packages
-      run: make -C lede download -j8
+      run: make -C lede download -j16
   
     - name: build firmware
-      run: make -C lede
+      run: make -C lede -j8
 
     - name: archive files
       uses: actions/upload-artifact@v3
