@@ -27,6 +27,18 @@ jobs:
         repository: coolsnowwolf/lede
         path: lede
 
+    - name: local cache
+      uses: j3hempsey-actions/local-cache@v3
+      with:
+        path: |
+          lede/dl
+          lede/feeds/packages
+          lede/feeds/luci
+          lede/feeds/routing
+          lede/feeds/telephony
+          lede/feeds/kenzo
+          lede/feeds/small
+
     - name: install feeds
       run: |
         cat <<EOF | tee lede/feeds.conf
