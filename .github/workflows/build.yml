@@ -25,6 +25,7 @@ jobs:
       uses: actions/checkout@v3.4.0
       with:
         repository: coolsnowwolf/lede
+        path: lede
 
     - name: install feeds
       run: |
