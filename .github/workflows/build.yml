@@ -6,9 +6,6 @@ on:
   schedule:
   - cron: '30 15 * * *'
 
-env:
-  CACHE_DIR: /_work/openwrt-build-runner/cache
-
 jobs:
   build:
     runs-on: self-hosted
@@ -29,25 +26,7 @@ jobs:
       with:
         repository: coolsnowwolf/lede
         path: lede
-
-    - name: lede downloads cache
-      uses: j3hempsey-actions/local-cache@v1.0.0
-      with:
-        path: |
-          lede/dl
-          lede/feeds/packages
-          lede/feeds/luci
-          lede/feeds/routing
-          lede/feeds/telephony
-          lede/feeds/kenzo
-          lede/feeds/small
-        key: lede-downloads
-
-    - name: lede ccache
-      uses: j3hempsey-actions/local-cache@v1.0.0
-      with:
-        path: lede/.ccache
-        key: lede-ccache
+        clean: false
 
     - name: install feeds
       run: |
@@ -87,7 +66,7 @@ jobs:
         make -C lede defconfig
 
     - name: download packages
-      run: make -C lede download -j16
+      run: make -C lede download
 
     - name: build firmware
       run: make -C lede -j8
