@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - name: apt install packages
+      env:
+        DEBIAN_FRONTEND: noninteractive
       run: |
         sudo apt update -y
         sudo apt install -y ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
